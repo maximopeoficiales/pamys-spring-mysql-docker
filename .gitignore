@@ -1,4 +1,7 @@
-HELP.md
+/db/
+/db/*.cnf
+db/#innodb_temp/*.ibt
+# HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

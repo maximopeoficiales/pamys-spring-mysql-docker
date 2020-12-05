@@ -1,0 +1,25 @@
+package com.idat.proyect.persistence.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "product_images")
+public class ProductImages {
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Column(name = "id")
+     private Integer idProductImages;
+
+     @Column(length = 30)
+     private String idProduct;
+     @Column(length = 100)
+     private String url;
+}
