@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -21,6 +23,7 @@ public class Order {
      @Column(name = "id")
      private Integer idOrder;
 
+     @Column(name = "idClient")
      private Integer idClient;
 
      private Double total;
@@ -32,5 +35,10 @@ public class Order {
      private LocalDateTime dateCreated;
 
      private Integer status;
+
+     // muchas compras pueden ser hechas por un solo cliente
+     @ManyToOne
+     @JoinColumn(name = "idClient", insertable = false, updatable = false)
+     private Client client;
 
 }

@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -44,4 +46,15 @@ public class Product {
      private LocalDateTime dateCreated;
 
      private Integer stock;
+
+     // muchos productos tienen una categoria
+     // name : fk
+     @ManyToOne
+     @JoinColumn(name = "idCategory", insertable = false, updatable = false)
+     private Category category;
+
+     @ManyToOne
+     @JoinColumn(name = "idVendor", insertable = false, updatable = false)
+     private Category vendor;
+
 }

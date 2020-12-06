@@ -1,6 +1,6 @@
 /db/
 /db/*.cnf
-db/#innodb_temp/*.ibt
+/db/#innodb_temp/*.ibt
 # HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
