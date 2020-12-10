@@ -25,7 +25,7 @@ public class Role {
      private String name;
 
      // una categoria puede tener muchos productos
-     @OneToMany(mappedBy = "role")
-     private List<Client> clients;
+     // @OneToMany(mappedBy = "role")
+     // private List<Client> clients;
 
 }

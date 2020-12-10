@@ -50,13 +50,12 @@ public class Client {
 
      private Integer active;
 
-     @ManyToOne
-     @JoinColumn(name = "idRole", insertable = false, updatable = false)
-     private Role role;
+     @OneToMany
+     @JoinColumn(name = "idRole")
+     private List<Role> role;
 
-
-     //un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
-     @OneToMany(mappedBy = "client")
-     private List<Order> orders;
+     // un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
+     // @OneToMany(mappedBy = "client")
+     // private List<Order> orders;
 
 }

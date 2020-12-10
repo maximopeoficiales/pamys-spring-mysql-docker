@@ -26,6 +26,6 @@ public class Vendor {
      private String description;
 
      // un proveedor puede tener muchos productos
-     @OneToMany(mappedBy = "vendor")
-     private List<Product> products;
+     // @OneToMany(mappedBy = "vendor")
+     // private List<Product> products;
 }

@@ -30,8 +30,8 @@ public class Category {
      private Integer active;
 
      // una categoria puede tener muchos productos
-     @OneToMany(mappedBy = "category")
-     private List<Product> products;
+     // @OneToMany(mappedBy = "category")
+     // private List<Product> products;
 
      
 }

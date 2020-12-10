@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -26,5 +28,6 @@ public class ProductImages {
 
      @ManyToOne
      @JoinColumn(name = "idProduct", insertable = false, updatable = false)
+     @JsonIgnore // evita la multidependencia
      Product product;
 }
