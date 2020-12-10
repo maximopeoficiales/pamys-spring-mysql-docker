@@ -1,16 +1,18 @@
 package com.idat.proyect.persistence.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 
@@ -18,8 +20,10 @@ import lombok.Data;
 @Entity
 @Table(name = "product")
 public class Product {
+
      @Id
-     @Column(name = "id", length = 30)
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Column(name = "id")
      private Integer idProduct;
 
      @Column(name = "idCategory")
@@ -55,6 +59,9 @@ public class Product {
 
      @ManyToOne
      @JoinColumn(name = "idVendor", insertable = false, updatable = false)
-     private Category vendor;
+     private Vendor vendor;
+
+     @OneToMany(mappedBy = "product")
+     private List<ProductImages> productsImages;
 
 }

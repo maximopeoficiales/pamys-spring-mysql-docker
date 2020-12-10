@@ -20,7 +20,6 @@ public class Vendor {
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      @Column(name = "id")
      private Integer idVendor;
-
      @Column(length = 40)
      private String company;
      @Column(length = 100)

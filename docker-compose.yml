@@ -16,7 +16,7 @@ services:
       - 3307:3306
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_DATABASE: tienda-pamys
+      MYSQL_DATABASE: DB_PAMYS
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./db:/var/lib/mysql

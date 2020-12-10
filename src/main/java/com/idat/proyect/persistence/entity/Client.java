@@ -5,11 +5,13 @@ import javax.persistence.Table;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -49,10 +51,13 @@ public class Client {
 
      private Integer active;
 
-     // un cliente pude muchos roles
-     @OneToMany
-     @JoinColumn(name = "id")
-     private List<Role> roles;
+     @ManyToOne
+     @JoinColumn(name = "idRole", insertable = false, updatable = false)
+     private Role role;
 
-     
+
+     //un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
+     @OneToMany(mappedBy = "client")
+     private List<Order> orders;
+
 }

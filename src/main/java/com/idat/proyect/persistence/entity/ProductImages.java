@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -18,8 +20,11 @@ public class ProductImages {
      @Column(name = "id")
      private Integer idProductImages;
 
-     @Column(length = 30)
-     private String idProduct;
+     private Integer idProduct;
      @Column(length = 100)
      private String url;
+
+     @ManyToOne
+     @JoinColumn(name = "idProduct", insertable = false, updatable = false)
+     Product product;
 }

@@ -26,11 +26,11 @@ public class OrderDetails {
      // Muchos ordenes detalle tiene una sola orden
      @ManyToOne
      @MapsId("idOrder")
-     @JoinColumn(name = "id", insertable = false, updatable = false)
+     @JoinColumn(name = "idOrder", insertable = false, updatable = false)
      private Order order;
      
      // Muchos ordenes detalle tiene una sola orden
      @ManyToOne
-     @JoinColumn(name = "id", insertable = false, updatable = false)
+     @JoinColumn(name = "idProduct", insertable = false, updatable = false)
      private Product product;
 }
