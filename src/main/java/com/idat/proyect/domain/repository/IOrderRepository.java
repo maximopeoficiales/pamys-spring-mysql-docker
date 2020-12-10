@@ -10,7 +10,10 @@ public interface IOrderRepository {
 
      Optional<Order> getOrder(int idOrder);
 
+     Optional<List<Order>> getIdClient(int idClient);
+
      Optional<List<Order>> getStatus(int status);
+
      Optional<List<Order>> getDateCreated(String dateCreated);
 
      Order save(Order Order);

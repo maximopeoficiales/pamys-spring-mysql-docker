@@ -11,4 +11,5 @@ public interface IProductCR extends CrudRepository<Product, Integer> {
      Optional<List<Product>> findByIdCategory(Integer idCategory);
 
      Optional<List<Product>> findByIdVendor(Integer idVendor);
+
 }

@@ -12,6 +12,10 @@ public interface IClientRepository {
 
      Optional<List<Client>> getIdRole(int idRole);
 
+     Optional<List<Client>> getUsername(int username);
+
+     Optional<List<Client>> getEmail(int email);
+
      Client save(Client Client);
 
      void delete(int idClient);
