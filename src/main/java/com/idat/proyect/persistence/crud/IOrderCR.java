@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.idat.proyect.persistence.entity.Order;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IOrderCR extends CrudRepository<Order, Integer> {
