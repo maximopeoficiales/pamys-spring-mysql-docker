@@ -55,10 +55,12 @@ public class Product {
 
      // muchos productos tienen una categoria
      // name : fk
+     // @JsonIgnore
      @ManyToOne
      @JoinColumn(name = "idCategory", insertable = false, updatable = false)
      private Category category;
 
+     // @JsonIgnore
      @ManyToOne
      @JoinColumn(name = "idVendor", insertable = false, updatable = false)
      private Vendor vendor;
