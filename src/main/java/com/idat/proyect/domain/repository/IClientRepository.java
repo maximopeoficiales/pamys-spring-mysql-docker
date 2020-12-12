@@ -10,9 +10,9 @@ public interface IClientRepository {
 
      Optional<Client> getClient(int idClient);
 
-     Optional<List<Client>> getUsername(String username);
+     Optional<Client> getUsername(String username);
 
-     Optional<List<Client>> getEmail(String email);
+     Optional<Client> getEmail(String email);
 
      Client save(Client client);
 

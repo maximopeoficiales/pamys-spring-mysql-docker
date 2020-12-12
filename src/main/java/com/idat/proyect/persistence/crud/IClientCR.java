@@ -5,10 +5,14 @@ import java.util.Optional;
 
 import com.idat.proyect.persistence.entity.Client;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IClientCR extends CrudRepository<Client, Integer> {
-     Optional<List<Client>> findByUsername(String username);
+     Optional<Client> findByUsername(String username);
 
-     Optional<List<Client>> findByEmail(String email);
+     @Query(value = "SELECT u FROM client where u.username = 1?", nativeQuery = true)
+     Client findByUsername2(String username);
+
+     Optional<Client> findByEmail(String email);
 }

@@ -2,18 +2,47 @@ package com.idat.proyect.domain.service;
 
 import java.util.ArrayList;
 
+import com.idat.proyect.persistence.crud.IClientCR;
+import com.idat.proyect.persistence.entity.Client;
+import com.idat.proyect.persistence.entity.Role;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 //en esta clase le indica a spring que sobreescriba el metodo de registro de usuarios
-@Service
+@Service("userDetailsService")
 public class IdatUserDetailsService implements UserDetailsService {
-     //por ahora solo tiene un usuario en memoria
+     // por ahora solo tiene un usuario en memoria
+     @Autowired
+     private IClientCR crud;
+
      @Override
+     @Transactional(readOnly = true)
      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-          return new User("admin", "{noop}admin", new ArrayList<>());
+
+          // si encuentra un resultado devuelve el cliente si no null
+          Client client = crud.findByUsername(username).map(Client -> {
+               return Client;
+          }).orElse(null);
+
+          if (client == null) {
+               throw new UsernameNotFoundException(username);
+          }
+          /* creo array de roles */
+          var roles = new ArrayList<GrantedAuthority>();
+          /* recorro roles */
+          for (Role rol : client.getRoles()) {
+               // se agregan los tipos de Roles
+               roles.add(new SimpleGrantedAuthority(rol.getName()));
+          }
+          // obligatoriamente los roles se tiene que llamar
+          return new User(client.getUsername(), client.getPassword(), roles);
      }
 }

@@ -51,9 +51,9 @@ public class Client {
      private Integer active;
 
      // id_client en el campo que esta en en el entity role
-     // @OneToMany
-     // @JoinColumn(name = "id_client")
-     // private List<Role> roles;
+     @OneToMany
+     @JoinColumn(name = "id_client")
+     private List<Role> roles;
      // un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
      // @OneToMany(mappedBy = "client")
      // private List<Order> orders;

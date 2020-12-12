@@ -32,7 +32,7 @@ public class AuthController {
      @Autowired
      private JWTUtil jwtUtil;
 
-     //usamos nuestra clases dto AuthenticationResponse AuthenticationRequest
+     // usamos nuestra clases dto AuthenticationResponse AuthenticationRequest
 
      @PostMapping("/authenticate")
      public ResponseEntity<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest request) {
@@ -42,10 +42,10 @@ public class AuthController {
                          new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
                // busco al usuario si esta registrado
                UserDetails userDetails = idatUserDetailsService.loadUserByUsername(request.getUsername());
-               
+
                // genero un jwt
                String jwt = jwtUtil.generaToken(userDetails);
-               
+
                // retorno el jwt si todo sale correcto
                return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
 

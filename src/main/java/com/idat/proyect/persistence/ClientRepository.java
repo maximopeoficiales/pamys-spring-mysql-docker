@@ -28,19 +28,18 @@ public class ClientRepository implements IClientRepository {
      }
 
      @Override
-     public Optional<List<Client>> getUsername(String username) {
+     public Optional<Client> getUsername(String username) {
           return crud.findByUsername(username);
      }
 
      @Override
-     public Optional<List<Client>> getEmail(String email) {
+     public Optional<Client> getEmail(String email) {
           return crud.findByEmail(email);
      }
 
      @Override
      public Client save(Client client) {
           // encripta el password
-          client.setPassword(EncriptarPassword.encriptarPassword(client.getPassword()));
           return crud.save(client);
      }
 
