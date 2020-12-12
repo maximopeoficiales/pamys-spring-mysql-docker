@@ -24,8 +24,11 @@ public class Role {
      @Column(length = 15)
      private String name;
 
+     //cada usuario tendra un rol
+     // @Column(name = "id_client")
+     // private Integer idClient;
      // una categoria puede tener muchos productos
      // @OneToMany(mappedBy = "role")
      // private List<Client> clients;
-
+     
 }

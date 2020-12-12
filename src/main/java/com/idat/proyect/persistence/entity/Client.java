@@ -30,8 +30,8 @@ public class Client {
      @Column(length = 80)
      private String password;
 
-     @Column(name = "idRole")
-     private Integer idRole;
+     // @Column(name = "idRole")
+     // private Integer idRole;
 
      @Column(name = "first_name", length = 45)
      private String firstName;
@@ -50,10 +50,10 @@ public class Client {
 
      private Integer active;
 
-     @OneToMany
-     @JoinColumn(name = "idRole")
-     private List<Role> role;
-
+     // id_client en el campo que esta en en el entity role
+     // @OneToMany
+     // @JoinColumn(name = "id_client")
+     // private List<Role> roles;
      // un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
      // @OneToMany(mappedBy = "client")
      // private List<Order> orders;
