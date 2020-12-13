@@ -43,6 +43,6 @@ public class IdatUserDetailsService implements UserDetailsService {
                roles.add(new SimpleGrantedAuthority(rol.getName()));
           }
           // obligatoriamente los roles se tiene que llamar
-          return new User(client.getUsername(), client.getPassword(), roles);
+          return new User(client.getUsername(),"{bcrypt}"+ client.getPassword(), roles);
      }
 }

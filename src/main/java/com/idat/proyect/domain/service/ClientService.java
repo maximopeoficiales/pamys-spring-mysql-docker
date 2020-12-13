@@ -17,12 +17,7 @@ public class ClientService {
      private ClientRepository clientRepository;
 
      public List<Client> getAll() {
-          List<Client> clients = new ArrayList<Client>();
-          clientRepository.getAll().forEach(client -> {
-               client.setPassword(client.getPassword().replace("{bcrypt}", ""));
-               clients.add(client);
-          });
-          return clients;
+          return clientRepository.getAll();
      }
 
      public Optional<Client> getClient(int idClient) {
