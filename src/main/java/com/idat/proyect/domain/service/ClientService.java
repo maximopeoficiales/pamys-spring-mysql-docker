@@ -33,7 +33,7 @@ public class ClientService {
      }
 
      public Client save(Client client) {
-          client.setPassword("{bcrypt}" + EncriptarPassword.encriptarPassword(client.getPassword()));
+          client.setPassword(EncriptarPassword.encriptarPassword(client.getPassword()));
           return clientRepository.save(client);
      }
 

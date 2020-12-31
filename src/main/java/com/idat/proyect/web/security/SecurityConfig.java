@@ -42,8 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           // permitido el acceso
           // http.authorizeRequests().antMatchers("/**/swagger-ui**").permitAll();
 
-          http.csrf().disable().authorizeRequests().antMatchers("/**/authenticate").permitAll().anyRequest()
-                    .authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+          http.csrf().disable().authorizeRequests().antMatchers("/**/authenticate", "/**/public/**").permitAll()
+                    .anyRequest().authenticated().and().sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
           // y las demas peticiones si necesitaran autenticacion
           // y que las sesiones estaran desactivadas esto porque siempre se usara el token
           // para su autenticacion

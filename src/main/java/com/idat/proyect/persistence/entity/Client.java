@@ -3,6 +3,8 @@ package com.idat.proyect.persistence.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.idat.proyect.web.security.EncriptarPassword;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 import lombok.Data;
 
@@ -51,11 +54,18 @@ public class Client {
      private Integer active;
 
      // id_client en el campo que esta en en el entity role
-     @OneToMany
-     @JoinColumn(name = "id_client")
-     private List<Role> roles;
+     // @OneToMany
+     // @JoinColumn(name = "id_client")
+     @Column(name = "id_rol")
+     private Integer idRol;
+
      // un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
      // @OneToMany(mappedBy = "client")
      // private List<Order> orders;
-
+     /* ciclo de vida de persistance */
+     // @PrePersist
+     // void prePersist() {
+     //      // antes de guardar se hara esto
+     //      password = EncriptarPassword.encriptarPassword(password);
+     // }
 }
