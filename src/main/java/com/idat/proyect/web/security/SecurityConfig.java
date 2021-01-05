@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
      }
 
+
      // rutas a ignorar filtros
      @Override
      public void configure(WebSecurity web) throws Exception {
