@@ -40,14 +40,14 @@ public class ClientController {
      @ApiOperation("Search a client with a ID")
      @ApiResponses({ @ApiResponse(code = 200, message = "OK"),
                @ApiResponse(code = 404, message = "Product not found") })
-     public ResponseEntity<Client> getByIdClient(
+     public ResponseEntity<Client> getById(
                @ApiParam(value = "The id of the client", required = true, example = "5") @PathVariable("id") int idClient) {
           // si no existe un producto retorna un NOT_FOUND
           return clientService.getClient(idClient).map(p -> new ResponseEntity<>(p, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
      }
 
-     @PostMapping("/save")
+     @PostMapping
      @ApiOperation("Save a Client")
      @ApiResponse(code = 201, message = "OK")
      public ResponseEntity<Client> save(@RequestBody Client client) {

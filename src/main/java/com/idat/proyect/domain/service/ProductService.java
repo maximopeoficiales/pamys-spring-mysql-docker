@@ -17,13 +17,17 @@ public class ProductService {
      public List<Product> getAll() {
           return productRepository.getAll();
      }
-     
+
      public Optional<Product> getProduct(int productId) {
           return productRepository.getProduct(productId);
      }
 
      public Optional<List<Product>> getIdCategory(int categoryId) {
           return productRepository.getIdCategory(categoryId);
+     }
+
+     public Optional<List<Product>> getByName(String nameProduct) {
+          return productRepository.getByName(nameProduct);
      }
 
      public Product save(Product product) {

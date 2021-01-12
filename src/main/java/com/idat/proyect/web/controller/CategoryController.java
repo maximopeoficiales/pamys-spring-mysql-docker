@@ -38,14 +38,14 @@ public class CategoryController {
     @GetMapping("/{id}")
     @ApiOperation("Search a category with a ID")
     @ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 404, message = "Product not found") })
-    public ResponseEntity<Category> getByIdClient(
+    public ResponseEntity<Category> getById(
             @ApiParam(value = "The id of the category", required = true, example = "5") @PathVariable("id") int idCategory) {
         // si no existe un producto retorna un NOT_FOUND
         return categoryService.getCategory(idCategory).map(p -> new ResponseEntity<>(p, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/save")
+    @PostMapping
     @ApiOperation("Save a Category")
     @ApiResponse(code = 201, message = "OK")
     public ResponseEntity<Category> save(@RequestBody Category category) {

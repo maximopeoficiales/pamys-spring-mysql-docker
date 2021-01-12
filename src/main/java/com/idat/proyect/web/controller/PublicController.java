@@ -21,7 +21,7 @@ public class PublicController {
     @Autowired
     private ClientService clientService;
 
-    @PostMapping("/clients/save")
+    @PostMapping("/client")
     @ApiOperation("Save a Client")
     @ApiResponse(code = 201, message = "OK")
     public ResponseEntity<Client> save(@RequestBody Client client) {

@@ -10,7 +10,9 @@ public interface IVendorRepository {
 
      Optional<Vendor> getVendor(int idVendor);
 
-     Vendor save(Vendor Vendor);
+     Optional<List<Vendor>> findByCompany(String company);
+
+     Vendor save(Vendor vendor);
 
      void delete(int idVendor);
 }

@@ -45,4 +45,9 @@ public class ProductRepository implements IProductRepository {
           crud.deleteById(productId);
      }
 
+     @Override
+     public Optional<List<Product>> getByName(String nameProduct) {
+          return crud.findByNameLike("%" + nameProduct + "%");
+     }
+
 }
