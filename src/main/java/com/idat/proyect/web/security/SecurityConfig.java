@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 //se le indica que se encargara de la seguridad
 @EnableWebSecurity
@@ -66,4 +68,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      public AuthenticationManager authenticationManagerBean() throws Exception {
           return super.authenticationManagerBean();
      }
+     
+     //se agrega cors globalmente para todos endpoints
+     @Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("*");
+			}
+		};
+	}
 }

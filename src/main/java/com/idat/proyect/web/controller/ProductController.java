@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 
-@CrossOrigin(origins="*")
+// @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/product")
 public class ProductController {
      @Autowired
      private ProductService productService;

@@ -1,5 +1,7 @@
 package com.idat.proyect.domain.dto;
 
+import com.idat.proyect.persistence.entity.Client;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,5 +11,6 @@ import lombok.Data;
 public class AuthenticationResponse {
      private String jwt;
 
+     private Client user;
 
 }

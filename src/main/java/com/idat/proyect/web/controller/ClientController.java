@@ -23,9 +23,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@CrossOrigin(origins="*")
+// @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/client")
 public class ClientController {
      @Autowired
      private ClientService clientService;

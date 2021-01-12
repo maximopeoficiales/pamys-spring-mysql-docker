@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 
-@CrossOrigin(origins="*")
+// @CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/public")
 public class PublicController {
