@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.idat.proyect.persistence.crud.IClientCR;
 import com.idat.proyect.persistence.crud.IRoleCR;
 import com.idat.proyect.persistence.entity.Client;
-import com.idat.proyect.persistence.entity.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

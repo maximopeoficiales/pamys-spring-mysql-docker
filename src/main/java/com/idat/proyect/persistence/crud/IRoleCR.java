@@ -1,6 +1,5 @@
 package com.idat.proyect.persistence.crud;
 
-import java.util.Optional;
 
 import com.idat.proyect.persistence.entity.Role;
 
