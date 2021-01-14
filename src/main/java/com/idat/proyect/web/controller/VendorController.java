@@ -62,14 +62,12 @@ public class VendorController {
         return new ResponseEntity<>(vendorService.save(vendor), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @ApiOperation("Update a Vendor")
     @ApiResponse(code = 201, message = "OK")
-    public ResponseEntity<Vendor> update(
-            @ApiParam(value = "The id of the vendor", required = true, example = "1") @PathVariable("id") int idVendor,
-            @RequestBody Vendor vendor) {
+    public ResponseEntity<Vendor> update(@RequestBody Vendor vendor) {
 
-        Vendor currentVendor = vendorService.getVendor(idVendor).map(Vendor -> {
+        Vendor currentVendor = vendorService.getVendor(vendor.getIdVendor()).map(Vendor -> {
             return Vendor;
         }).orElse(null);
         currentVendor.setCompany(vendor.getCompany());

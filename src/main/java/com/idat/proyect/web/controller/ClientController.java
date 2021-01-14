@@ -57,11 +57,9 @@ public class ClientController {
      @PutMapping("/{id}")
      @ApiOperation("Update a Client")
      @ApiResponse(code = 201, message = "OK")
-     public ResponseEntity<Client> update(
-               @ApiParam(value = "The id of the client", required = true, example = "1") @PathVariable("id") int idClient,
-               @RequestBody Client client) {
+     public ResponseEntity<Client> update(@RequestBody Client client) {
 
-          Client currentClient = clientService.getClient(idClient).map(Client -> {
+          Client currentClient = clientService.getClient(client.getIdClient()).map(Client -> {
                return Client;
           }).orElse(null);
           currentClient.setAddress(client.getAddress());

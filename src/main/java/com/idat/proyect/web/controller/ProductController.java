@@ -72,14 +72,12 @@ public class ProductController {
           return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
      }
 
-     @PutMapping("/{id}")
+     @PutMapping
      @ApiOperation("Update a Product")
      @ApiResponse(code = 201, message = "OK")
-     public ResponseEntity<Product> update(
-               @ApiParam(value = "The id of the product", required = true, example = "1") @PathVariable("id") int idProduct,
-               @RequestBody Product product) {
+     public ResponseEntity<Product> update(@RequestBody Product product) {
 
-          Product currentProduct = productService.getProduct(idProduct).map(Product -> {
+          Product currentProduct = productService.getProduct(product.getIdProduct()).map(Product -> {
                return Product;
           }).orElse(null);
           currentProduct.setCategory(product.getCategory());

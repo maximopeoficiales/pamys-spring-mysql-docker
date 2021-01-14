@@ -55,11 +55,9 @@ public class CategoryController {
     @PutMapping("/{id}")
     @ApiOperation("Update a Category")
     @ApiResponse(code = 201, message = "OK")
-    public ResponseEntity<Category> update(
-            @ApiParam(value = "The id of the category", required = true, example = "1") @PathVariable("id") int idCategory,
-            @RequestBody Category category) {
+    public ResponseEntity<Category> update(@RequestBody Category category) {
 
-        Category currentClient = categoryService.getCategory(idCategory).map(Category -> {
+        Category currentClient = categoryService.getCategory(category.getIdCategory()).map(Category -> {
             return Category;
         }).orElse(null);
         currentClient.setName(category.getName());
