@@ -53,8 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           // se añade filtro antes de ejecutar una peticion que sera de tipo usuario y
           // contraseña
           http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
+          // habilita el cors
+          http.cors();
      }
-
 
      // rutas a ignorar filtros
      @Override
@@ -68,15 +69,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      public AuthenticationManager authenticationManagerBean() throws Exception {
           return super.authenticationManagerBean();
      }
-     
-     //se agrega cors globalmente para todos endpoints
+
+     // se agrega cors globalmente para todos endpoints
      @Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
-			}
-		};
-	}
+     public WebMvcConfigurer corsConfigurer() {
+          return new WebMvcConfigurer() {
+               @Override
+               public void addCorsMappings(CorsRegistry registry) {
+                    registry.addMapping("/**").allowedOrigins("*").allowedHeaders("*").exposedHeaders("Authorization");
+               }
+          };
+     }
 }
