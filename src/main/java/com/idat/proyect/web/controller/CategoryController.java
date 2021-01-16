@@ -52,7 +52,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @ApiOperation("Update a Category")
     @ApiResponse(code = 201, message = "OK")
     public ResponseEntity<Category> update(@RequestBody Category category) {

@@ -54,7 +54,7 @@ public class ClientController {
           return new ResponseEntity<>(clientService.save(client), HttpStatus.CREATED);
      }
 
-     @PutMapping("/{id}")
+     @PutMapping
      @ApiOperation("Update a Client")
      @ApiResponse(code = 201, message = "OK")
      public ResponseEntity<Client> update(@RequestBody Client client) {
