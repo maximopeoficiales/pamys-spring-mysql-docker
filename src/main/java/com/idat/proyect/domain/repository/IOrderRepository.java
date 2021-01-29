@@ -12,7 +12,7 @@ public interface IOrderRepository {
 
      Optional<List<Order>> getIdClient(int idClient);
 
-     Optional<List<Order>> getStatus(int status);
+     // Optional<List<Order>> getStatus(int status);
 
      Optional<List<Order>> getDateCreated(String dateCreated);
 

@@ -31,10 +31,10 @@ public class OrderRepository implements IOrderRepository {
           return crud.findByIdClient(idClient);
      }
 
-     @Override
-     public Optional<List<Order>> getStatus(int status) {
-          return crud.findByStatus(status);
-     }
+     // @Override
+     // public Optional<List<Order>> getStatus(int status) {
+     //      return crud.findByStatus(status);
+     // }
 
      @Override
      public Optional<List<Order>> getDateCreated(String dateCreated) {

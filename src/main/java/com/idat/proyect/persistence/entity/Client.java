@@ -55,8 +55,8 @@ public class Client {
      @Column(name = "id_rol")
      private Integer idRol;
 
-     @OneToOne
-     @JoinColumn(name = "id_rol", updatable = false, nullable = false)
+     @OneToOne(cascade = { CascadeType.ALL })
+     @JoinColumn(name = "id_rol", insertable = false, updatable = false)
      private Role role;
 
      // un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER

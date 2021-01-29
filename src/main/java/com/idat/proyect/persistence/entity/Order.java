@@ -87,6 +87,6 @@ public class Order {
      private List<OrderDetails> productos;
 
      @OneToOne(cascade = { CascadeType.ALL })
-     @JoinColumn(name = "id_voucher", updatable = false, nullable = false)
+     @JoinColumn(name = "id_voucher", insertable = false, updatable = false)
      private Voucher voucher;
 }
