@@ -3,8 +3,6 @@ package com.idat.proyect.persistence.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,6 +43,8 @@ public class Client {
      @Column(length = 45)
      private String email;
 
+     private Integer zip_code;
+
      private Integer active;
 
      // id_client en el campo que esta en en el entity role
@@ -56,10 +56,11 @@ public class Client {
      // un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
      // @OneToMany(mappedBy = "client")
      // private List<Order> orders;
+     
      /* ciclo de vida de persistance */
      // @PrePersist
      // void prePersist() {
-     //      // antes de guardar se hara esto
-     //      password = EncriptarPassword.encriptarPassword(password);
+     // // antes de guardar se hara esto
+     // password = EncriptarPassword.encriptarPassword(password);
      // }
 }

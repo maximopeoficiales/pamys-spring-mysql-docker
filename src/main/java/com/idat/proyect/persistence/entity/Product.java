@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,10 +26,10 @@ public class Product {
      @Column(name = "id")
      private Integer idProduct;
 
-     @Column(name = "idCategory")
+     @Column(name = "id_category")
      private Integer idCategory;
 
-     @Column(name = "idVendor")
+     @Column(name = "id_vendor")
      private Integer idVendor;
 
      @Column(length = 50)
@@ -56,12 +55,12 @@ public class Product {
      // name : fk
      // @JsonIgnore
      @ManyToOne
-     @JoinColumn(name = "idCategory", insertable = false, updatable = false)
+     @JoinColumn(name = "id_category", insertable = false, updatable = false)
      private Category category;
 
      // @JsonIgnore
      @ManyToOne
-     @JoinColumn(name = "idVendor", insertable = false, updatable = false)
+     @JoinColumn(name = "id_vendor", insertable = false, updatable = false)
      private Vendor vendor;
 
      @OneToMany(mappedBy = "product")
