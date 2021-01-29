@@ -72,9 +72,9 @@ public class ClientController {
      @DeleteMapping("/{id}")
      @ApiOperation("Delete a Client by ID")
      @ApiResponse(code = 201, message = "OK")
-     public ResponseEntity delete(
+     public ResponseEntity<?> delete(
                @ApiParam(value = "The id of the client", required = true, example = "1") @PathVariable("id") int idClient) {
-          return (clientService.delete(idClient)) ? new ResponseEntity(HttpStatus.OK)
-                    : new ResponseEntity(HttpStatus.NOT_FOUND);
+          return (clientService.delete(idClient)) ? new ResponseEntity<>(HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
      }
 }

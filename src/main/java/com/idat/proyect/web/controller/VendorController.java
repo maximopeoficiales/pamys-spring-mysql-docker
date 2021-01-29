@@ -78,9 +78,9 @@ public class VendorController {
     @DeleteMapping("/{id}")
     @ApiOperation("Delete a Vendor by ID")
     @ApiResponse(code = 201, message = "OK")
-    public ResponseEntity delete(
+    public ResponseEntity<?> delete(
             @ApiParam(value = "The id of the vendor", required = true, example = "1") @PathVariable("id") int idVendor) {
-        return (vendorService.delete(idVendor)) ? new ResponseEntity(HttpStatus.OK)
-                : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return (vendorService.delete(idVendor)) ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

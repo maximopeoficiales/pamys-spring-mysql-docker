@@ -1,6 +1,5 @@
 package com.idat.proyect.web.controller;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -94,9 +93,9 @@ public class ProductController {
      @DeleteMapping("/{id}")
      @ApiOperation("Delete a Product by ID")
      @ApiResponse(code = 201, message = "OK")
-     public ResponseEntity delete(
+     public ResponseEntity<?> delete(
                @ApiParam(value = "The id of the product", required = true, example = "1") @PathVariable("id") int idProduct) {
-          return (productService.delete(idProduct)) ? new ResponseEntity(HttpStatus.OK)
-                    : new ResponseEntity(HttpStatus.NOT_FOUND);
+          return (productService.delete(idProduct)) ? new ResponseEntity<>(HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
      }
 }

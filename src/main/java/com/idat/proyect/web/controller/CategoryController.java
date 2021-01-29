@@ -69,9 +69,9 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     @ApiOperation("Delete a Category by ID")
     @ApiResponse(code = 201, message = "OK")
-    public ResponseEntity delete(
+    public ResponseEntity<?> delete(
             @ApiParam(value = "The id of the category", required = true, example = "1") @PathVariable("id") int idCategory) {
-        return (categoryService.delete(idCategory)) ? new ResponseEntity(HttpStatus.OK)
-                : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return (categoryService.delete(idCategory)) ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
