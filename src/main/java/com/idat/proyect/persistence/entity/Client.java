@@ -2,11 +2,13 @@ package com.idat.proyect.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -53,10 +55,14 @@ public class Client {
      @Column(name = "id_rol")
      private Integer idRol;
 
+     @OneToOne
+     @JoinColumn(name = "id_rol", updatable = false, nullable = false)
+     private Role role;
+
      // un cliente tiene muchas ordenes mappgedby cliente esta en la clase ORDER
      // @OneToMany(mappedBy = "client")
      // private List<Order> orders;
-     
+
      /* ciclo de vida de persistance */
      // @PrePersist
      // void prePersist() {

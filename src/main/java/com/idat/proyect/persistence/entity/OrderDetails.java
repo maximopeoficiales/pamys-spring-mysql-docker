@@ -3,6 +3,9 @@ package com.idat.proyect.persistence.entity;
 import javax.persistence.Entity;
 
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,12 +17,6 @@ import lombok.Data;
 @Entity
 @Table(name = "order_details")
 public class OrderDetails {
-
-     // @Id
-     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-     // @Column(name = "id")
-     // private Integer idOrderDetails;
-
      @EmbeddedId
      private OrderDetailsPK id;
 
@@ -29,6 +26,9 @@ public class OrderDetails {
      // la anotacion join colum con su propiedad name es el nombre de atributo con el
      // que esta declarado para la base de datos
 
+     // porque no le pongo un mapsid al product porque si le pongo no podra ser estar
+     // en cascada
+     @JsonIgnore
      @ManyToOne
      @MapsId("id_order")
      @JoinColumn(name = "id_order", insertable = false, updatable = false)

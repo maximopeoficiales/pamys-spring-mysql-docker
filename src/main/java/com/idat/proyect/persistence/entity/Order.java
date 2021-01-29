@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -49,6 +50,9 @@ public class Order {
      @Column(name = "id_payment_status")
      private Integer idPaymentStatus;
 
+     @Column(name = "id_voucher")
+     private Integer idVoucher;
+
      @Column(name = "date_created")
      private LocalDateTime dateCreated;
 
@@ -82,4 +86,7 @@ public class Order {
      @OneToMany(mappedBy = "product", cascade = { CascadeType.ALL })
      private List<OrderDetails> productos;
 
+     @OneToOne(cascade = { CascadeType.ALL })
+     @JoinColumn(name = "id_voucher", updatable = false, nullable = false)
+     private Voucher voucher;
 }
