@@ -9,7 +9,7 @@ public interface IProductImagesRepository {
      List<ProductImages> getAll();
 
      Optional<ProductImages> getProductImages(int idProductImages);
-     Optional<ProductImages> getIdProduct(int idProduct);
+     Optional<List<ProductImages>> getIdProduct(int idProduct);
 
      ProductImages save(ProductImages ProductImages);
 

@@ -27,7 +27,7 @@ public class CategoryService {
     }
 
     public boolean delete(int idCategory) {
-        return getCategory(idCategory).map(product -> {
+        return getCategory(idCategory).map(Category -> {
             categoryRepository.delete(idCategory);
             return true;
         }).orElse(false);

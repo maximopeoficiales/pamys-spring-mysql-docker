@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -63,7 +64,7 @@ public class Product {
      @JoinColumn(name = "id_vendor", insertable = false, updatable = false)
      private Vendor vendor;
 
-     @OneToMany(mappedBy = "product")
+     @OneToMany(mappedBy = "product",cascade = {CascadeType.ALL})
      private List<ProductImages> productsImages;
 
 }

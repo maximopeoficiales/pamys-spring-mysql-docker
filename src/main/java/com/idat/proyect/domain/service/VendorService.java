@@ -31,7 +31,7 @@ public class VendorService {
     }
 
     public boolean delete(int idVendor) {
-        return getVendor(idVendor).map(product -> {
+        return getVendor(idVendor).map(vendor -> {
             vendorRepository.delete(idVendor);
             return true;
         }).orElse(false);
