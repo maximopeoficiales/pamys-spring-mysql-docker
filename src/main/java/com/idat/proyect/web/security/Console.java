@@ -3,6 +3,11 @@ package com.idat.proyect.web.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@AllArgsConstructor
+@Data
 public class Console {
 
     public Logger logger;

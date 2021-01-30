@@ -47,7 +47,7 @@ public class Client {
 
      private Integer zip_code;
 
-     private Integer active;
+     private Boolean active;
 
      // id_client en el campo que esta en en el entity role
      // @OneToMany

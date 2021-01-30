@@ -38,6 +38,9 @@ public class Order {
      @Column(length = 100, name = "shipping_address")
      private String shippingAddress;
 
+     @Column(length = 150, name = "comment")
+     private String comment;
+
      @Column(name = "zip_code")
      private Integer zipCode;
 
@@ -86,7 +89,7 @@ public class Order {
      // usara id_producto
 
      @OneToMany(mappedBy = "order", cascade = { CascadeType.ALL })
-     private List<OrderDetails> productos;
+     private List<OrderDetails> products;
 
      @OneToOne(cascade = { CascadeType.ALL })
      @JoinColumn(name = "id_voucher", insertable = false, updatable = false)

@@ -28,7 +28,7 @@ public class Category {
      @Column(length = 45)
      private String description;
 
-     private Integer active;
+     private Boolean active;
 
      // // una categoria puede tener muchos productos
      // @OneToMany(mappedBy = "category")

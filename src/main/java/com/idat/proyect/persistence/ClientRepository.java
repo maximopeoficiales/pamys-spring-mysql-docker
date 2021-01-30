@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ClientRepository implements IClientRepository {
-
+// 
      @Autowired
      private IClientCR crud;
 

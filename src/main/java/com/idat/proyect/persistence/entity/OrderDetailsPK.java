@@ -8,6 +8,8 @@ import javax.persistence.Embeddable;
 import lombok.Data;
 
 //por que esta sera incluida en otra clase
+
+// @AllArgsConstructor
 @Data
 @Embeddable
 public class OrderDetailsPK implements Serializable {
