@@ -82,8 +82,10 @@ public class Order {
      // todas compras tendran en cascada sus productos
      // dentro de la clase OrderDetails el campo product
      // esto se usara para guardar producto en cascada
+     // mappedBy a Order porque este es el que tiene la relacion e internamente este
+     // usara id_producto
 
-     @OneToMany(mappedBy = "product", cascade = { CascadeType.ALL })
+     @OneToMany(mappedBy = "order", cascade = { CascadeType.ALL })
      private List<OrderDetails> productos;
 
      @OneToOne(cascade = { CascadeType.ALL })
