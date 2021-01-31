@@ -29,7 +29,7 @@ public class Voucher {
     @Column(name = "id")
     private Integer idVoucher;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url",length = 300)
     private String imageUrl;
 
     @Column(name = "id_client")

@@ -22,12 +22,14 @@ public class ProductImages {
      @Column(name = "id")
      private Integer idProductImages;
 
+     @Column(name = "id_product")
      private Integer idProduct;
-     @Column(length = 100)
+     
+     @Column(length = 300)
      private String url;
 
      @ManyToOne
-     @JoinColumn(name = "idProduct", insertable = false, updatable = false)
+     @JoinColumn(name = "id_product", insertable = false, updatable = false)
      @JsonIgnore // evita la multidependencia
      Product product;
 }

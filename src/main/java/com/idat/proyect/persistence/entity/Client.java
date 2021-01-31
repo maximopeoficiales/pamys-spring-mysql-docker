@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "client")
+@Table(name = "clients")
 public class Client {
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Client {
      @Column(length = 30)
      private String username;
 
-     @Column(length = 80)
+     @Column(length = 100,name = "_password")
      private String password;
 
      // @Column(name = "idRole")

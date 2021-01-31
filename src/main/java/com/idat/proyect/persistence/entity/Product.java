@@ -41,10 +41,10 @@ public class Product {
      @Column(name = "sale_price")
      private Double salePrice;
 
-     @Column(length = 255)
+     @Column(length = 300)
      private String description;
 
-     @Column(length = 100, name = "thumbnail_url")
+     @Column(length = 300, name = "thumbnail_url")
      private String thumbnailUrl;
 
      @Column(name = "date_created")

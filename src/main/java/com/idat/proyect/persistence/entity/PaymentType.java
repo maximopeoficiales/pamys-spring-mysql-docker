@@ -23,7 +23,7 @@ public class PaymentType {
     @Column(name = "id")
     private Integer idPaymentType;
 
-    @Column(length = 20)
+    @Column(length = 50)
     private String type;
 
 }
