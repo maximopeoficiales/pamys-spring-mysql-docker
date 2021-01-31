@@ -22,8 +22,10 @@ public class OrderService {
         return orderRepository.getOrder(idOrder);
     }
 
-    public Order save(Order Order) {
-        return orderRepository.save(Order);
+    public Order save(Order order) {
+
+        order.setProducts(null);
+        return orderRepository.save(order);
     }
 
     public boolean delete(int idOrder) {

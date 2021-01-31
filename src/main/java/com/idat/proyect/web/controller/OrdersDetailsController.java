@@ -10,9 +10,11 @@ import com.idat.proyect.persistence.entity.OrderDetailsPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,47 +48,51 @@ public class OrdersDetailsController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/deleteByIdOrder")
+    @DeleteMapping
     @ApiOperation("Delete  OrdersDetails by IdOrder and IdProduct")
     @ApiResponse(code = 201, message = "OK")
-    public ResponseEntity<?> deleteByIdOrderAndIdProduct(@RequestBody OrderDetailsPK orderDetailsPK) {
+    public ResponseEntity<List<OrderDetails>> deleteByIdOrderAndIdProduct(@RequestBody OrderDetailsPK orderDetailsPK) {
         // return? new ResponseEntity<>(HttpStatus.OK)
         // : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        orderDetailsService.deleteByIdOrderAndIdProduct(orderDetailsPK.getIdOrder(), orderDetailsPK.getIdProduct());
-        return new ResponseEntity<>(HttpStatus.OK);
+        var resp = orderDetailsService.deleteByIdOrderAndIdProduct(orderDetailsPK);
+        if (resp) {
+            var orderDetailsActualizado = orderDetailsService.getOrderDetailsByIdOrder(orderDetailsPK.getIdOrder())
+                    .map(p -> {
+                        return p;
+                    }).orElse(null);
+            return new ResponseEntity<>(orderDetailsActualizado, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
     @ApiOperation("Save a OrdersDetails")
     @ApiResponse(code = 201, message = "OK")
-    public ResponseEntity<OrderDetailsCustom> save(@RequestBody OrderDetailsCustom ordersDetailsCustom) {
-        return new ResponseEntity<>(orderDetailsService.saveCustom(ordersDetailsCustom), HttpStatus.CREATED);
+    public ResponseEntity<List<OrderDetails>> save(@RequestBody OrderDetailsCustom ordersDetailsCustom) {
+        var od = orderDetailsService.saveCustom(ordersDetailsCustom);
+        if (od) {
+            var orderDetailsActualizado = orderDetailsService.getOrderDetailsByIdOrder(ordersDetailsCustom.getIdOrder())
+                    .map(p -> {
+                        return p;
+                    }).orElse(null);
+            return new ResponseEntity<>(orderDetailsActualizado, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // @PutMapping
-    // @ApiOperation("Update a OrdersDetails")
-    // @ApiResponse(code = 201, message = "OK")
-    // public ResponseEntity<OrdersDetails> update(@RequestBody OrdersDetails
-    // ordersDetails) {
-    // OrdersDetails currentOrder =
-    // orderDetailsService.getOrder(ordersDetails.getIdOrder()).map(order -> {
-    // return order;
-    // }).orElse(null);
-    // currentOrder.setIdClient(ordersDetails.getIdClient());
-    // return new ResponseEntity<>(orderDetailsService.save(currentOrder),
-    // HttpStatus.CREATED);
-    // }
+    @PutMapping
+    @ApiOperation("Update a OrdersDetails")
+    @ApiResponse(code = 201, message = "OK")
+    public ResponseEntity<List<OrderDetails>> update(@RequestBody OrderDetailsCustom ordersDetailsCustom) {
+        var od = orderDetailsService.updateCustom(ordersDetailsCustom);
+        if (od) {
+            var orderDetailsActualizado = orderDetailsService.getOrderDetailsByIdOrder(ordersDetailsCustom.getIdOrder())
+                    .map(p -> {
+                        return p;
+                    }).orElse(null);
+            return new ResponseEntity<>(orderDetailsActualizado, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-    // @DeleteMapping
-    // @ApiOperation("Delete a Order by ID")
-    // @ApiResponse(code = 201, message = "OK")
-    // public ResponseEntity<?> delete(OrderDetails orderDetails) {
-    // try {
-    // orderDetailsService.delete(orderDetails);
-    // return new ResponseEntity<>(HttpStatus.OK);
-    // } catch (Exception e) {
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
-
-    // }
 }

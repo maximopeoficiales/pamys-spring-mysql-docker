@@ -17,5 +17,7 @@ public interface IOrderDetailsRepository {
 
      void deleteByIdOrderAndIdProduct(int idOrder, int idProduct);
 
-     OrderDetailsCustom saveOrderDetailsCustom(OrderDetailsCustom orderDetailsCustom);
+     void saveOrderDetailsCustom(OrderDetailsCustom orderDetailsCustom);
+
+     void updateOrderDetailsCustom(OrderDetailsCustom orderDetailsCustom);
 }

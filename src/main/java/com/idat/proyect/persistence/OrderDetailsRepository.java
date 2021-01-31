@@ -43,10 +43,16 @@ public class OrderDetailsRepository implements IOrderDetailsRepository {
     }
 
     @Override
-    public OrderDetailsCustom saveOrderDetailsCustom(OrderDetailsCustom orderDetailsCustom) {
+    public void saveOrderDetailsCustom(OrderDetailsCustom orderDetailsCustom) {
         crud.saveOrderDetailsCustom(orderDetailsCustom.getIdOrder(), orderDetailsCustom.getIdProduct(),
                 orderDetailsCustom.getPrice(), orderDetailsCustom.getQuantity());
-        return orderDetailsCustom;
+    }
+
+    @Override
+    public void updateOrderDetailsCustom(OrderDetailsCustom orderDetailsCustom) {
+        crud.updateOrderDetailsCustom(orderDetailsCustom.getIdOrder(), orderDetailsCustom.getIdProduct(),
+                orderDetailsCustom.getPrice(), orderDetailsCustom.getQuantity());
+
     }
 
 }

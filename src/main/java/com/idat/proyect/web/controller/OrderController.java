@@ -64,13 +64,14 @@ public class OrderController {
         currentOrder.setSubtotal(Order.getSubtotal());
         currentOrder.setIgv(Order.getIgv());
         currentOrder.setTotal(Order.getTotal());
+        currentOrder.setComment(Order.getComment());
         currentOrder.setShippingAddress(Order.getShippingAddress());
         currentOrder.setZipCode(Order.getZipCode());
-        currentOrder.setDocumentType(Order.getDocumentType());
-        currentOrder.setOrderStatus(Order.getOrderStatus());
-        currentOrder.setPaymentType(Order.getPaymentType());
+        currentOrder.setIdDocumentType(Order.getIdDocumentType());
+        currentOrder.setIdOrderStatus(Order.getIdOrderStatus());
+        currentOrder.setIdPaymentStatus(Order.getIdPaymentStatus());
         currentOrder.setIdVoucher(Order.getIdVoucher());
-        currentOrder.setProducts(Order.getProducts());
+        // currentOrder.setProducts(Order.getProducts());
         return new ResponseEntity<>(orderService.save(currentOrder), HttpStatus.CREATED);
     }
 

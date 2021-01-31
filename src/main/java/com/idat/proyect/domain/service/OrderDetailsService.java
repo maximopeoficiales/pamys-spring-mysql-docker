@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.idat.proyect.domain.ModelsCustom.OrderDetailsCustom;
 import com.idat.proyect.persistence.OrderDetailsRepository;
 import com.idat.proyect.persistence.entity.OrderDetails;
+import com.idat.proyect.persistence.entity.OrderDetailsPK;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,20 +28,37 @@ public class OrderDetailsService {
         return orderDetailsRepository.save(orderDetails);
     }
 
-    public boolean deleteByIdOrderAndIdProduct(int idOrder, int idProduct) {
-        var orderDetails = getOrderDetailsByIdOrder(idOrder).map(od -> {
+    public boolean deleteByIdOrderAndIdProduct(OrderDetailsPK orderDetailsPK) {
+        var orderDetails = getOrderDetailsByIdOrder(orderDetailsPK.getIdOrder()).map(od -> {
             return od;
         }).orElse(null);
         if (orderDetails != null) {
-            orderDetailsRepository.deleteByIdOrderAndIdProduct(idOrder, idProduct);
+            orderDetailsRepository.deleteByIdOrderAndIdProduct(orderDetailsPK.getIdOrder(),
+                    orderDetailsPK.getIdProduct());
             return true;
         }
         return false;
 
     }
 
-    public OrderDetailsCustom saveCustom(OrderDetailsCustom orderDetailsCustom) {
-        return orderDetailsRepository.saveOrderDetailsCustom(orderDetailsCustom);
+    public boolean saveCustom(OrderDetailsCustom orderDetailsCustom) {
+        try {
+            // si hay error es un erro de producto duplicado
+            orderDetailsRepository.saveOrderDetailsCustom(orderDetailsCustom);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean updateCustom(OrderDetailsCustom orderDetailsCustom) {
+        try {
+            // si hay error es un erro de producto duplicado
+            orderDetailsRepository.updateOrderDetailsCustom(orderDetailsCustom);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
