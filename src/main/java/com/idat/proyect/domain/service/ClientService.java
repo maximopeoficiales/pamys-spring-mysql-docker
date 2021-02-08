@@ -36,6 +36,10 @@ public class ClientService {
           return clientRepository.save(client);
      }
 
+     public Client savePhoto(Client client) {
+          return clientRepository.save(client);
+     }
+
      public boolean delete(int idClient) {
           return getClient(idClient).map(Client -> {
                clientRepository.delete(idClient);
