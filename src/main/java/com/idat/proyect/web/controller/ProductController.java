@@ -81,6 +81,7 @@ public class ProductController {
           }).orElse(null);
           currentProduct.setCategory(product.getCategory());
           currentProduct.setDescription(product.getDescription());
+          currentProduct.setSku(product.getSku());
           currentProduct.setVendor(product.getVendor());
           currentProduct.setName(product.getName());
           currentProduct.setPrice(product.getPrice());
