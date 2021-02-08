@@ -50,6 +50,17 @@ public class ProductController {
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
      }
 
+     @GetMapping("/slug/{slug}")
+     @ApiOperation("Search a product with a slug")
+     @ApiResponses({ @ApiResponse(code = 200, message = "OK"),
+               @ApiResponse(code = 404, message = "Product not found") })
+     public ResponseEntity<Product> getBySlug(
+               @ApiParam(value = "The slug of the product", required = true, example = "product-slug-example") @PathVariable("slug") String slug) {
+          // si no existe un producto retorna un NOT_FOUND
+          return productService.getBySlug(slug).map(p -> new ResponseEntity<>(p, HttpStatus.OK))
+                    .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+     }
+
      @GetMapping("/search/{name}")
      @ApiOperation("Search a product with your name Company")
      @ApiResponses({ @ApiResponse(code = 200, message = "OK"),

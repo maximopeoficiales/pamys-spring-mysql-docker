@@ -15,6 +15,7 @@ public interface IProductRepository {
      Optional<List<Product>> getByName(String nameProduct);
 
      Optional<Product> getProduct(int idProduct);
+     Optional<Product> getBySlug(String slug);
 
      Product save(Product product);
 

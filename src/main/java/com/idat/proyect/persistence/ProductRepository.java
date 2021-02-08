@@ -50,4 +50,9 @@ public class ProductRepository implements IProductRepository {
           return crud.findByNameLike("%" + nameProduct + "%");
      }
 
+     @Override
+     public Optional<Product> getBySlug(String slug) {
+          return crud.findBySlug(slug);
+     }
+
 }

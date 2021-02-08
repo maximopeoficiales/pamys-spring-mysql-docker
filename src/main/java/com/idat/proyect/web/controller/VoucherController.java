@@ -49,7 +49,7 @@ public class VoucherController {
     @ApiOperation("Search a voucher with a idClient")
     @ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 404, message = "Voucher not found") })
     public ResponseEntity<List<Voucher>> getByIdClient(
-            @ApiParam(value = "The id of the voucher", required = true, example = "5") @PathVariable("id") int id_client) {
+            @ApiParam(value = "The id of the voucher", required = true, example = "5") @PathVariable("id_client") int id_client) {
         // si no existe un producto retorna un NOT_FOUND
         return voucherService.getVoucherByIdClient(id_client).map(p -> new ResponseEntity<>(p, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
