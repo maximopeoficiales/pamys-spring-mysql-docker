@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +37,11 @@ public class Product {
      @Column(length = 50)
      private String name;
 
+     @Column(unique = true)
+     private Integer sku;
+
+     private String slug;
+
      private Double price;
 
      @Column(name = "sale_price")
@@ -64,7 +70,7 @@ public class Product {
      @JoinColumn(name = "id_vendor", insertable = false, updatable = false)
      private Vendor vendor;
 
-     @OneToMany(mappedBy = "product",cascade = {CascadeType.ALL})
+     @OneToMany(mappedBy = "product", cascade = { CascadeType.ALL })
      private List<ProductImages> productsImages;
 
 }

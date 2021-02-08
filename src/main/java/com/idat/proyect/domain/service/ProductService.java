@@ -31,6 +31,7 @@ public class ProductService {
      }
 
      public Product save(Product product) {
+          product.setSlug(product.getName().replace(" ", "-"));
           return productRepository.save(product);
      }
 

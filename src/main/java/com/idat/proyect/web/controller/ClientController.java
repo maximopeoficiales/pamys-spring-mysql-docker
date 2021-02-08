@@ -51,6 +51,7 @@ public class ClientController {
      @ApiOperation("Save a Client")
      @ApiResponse(code = 201, message = "OK")
      public ResponseEntity<Client> save(@RequestBody Client client) {
+          client.setIdRol(1);
           return new ResponseEntity<>(clientService.save(client), HttpStatus.CREATED);
      }
 
@@ -63,9 +64,11 @@ public class ClientController {
                return Client;
           }).orElse(null);
           currentClient.setAddress(client.getAddress());
+          currentClient.setActive(client.getActive());
           currentClient.setPhone(client.getPhone());
           currentClient.setFirstName(client.getFirstName());
           currentClient.setLastName(client.getLastName());
+          currentClient.setPassword(client.getPassword());
           return new ResponseEntity<>(clientService.save(currentClient), HttpStatus.CREATED);
      }
 
