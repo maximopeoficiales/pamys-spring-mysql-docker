@@ -39,6 +39,9 @@ public class Client {
      @Column(length = 100)
      private String address;
 
+     @Column(name = "profile_picture_url",length = 350)
+     private String profilePictureUrl;
+
      @Column(length = 9)
      private String phone;
 
