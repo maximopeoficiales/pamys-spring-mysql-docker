@@ -11,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 // @CrossOrigin(origins="*")
 @RestController
@@ -31,14 +34,25 @@ public class PublicController {
     @PostMapping("/client")
     @ApiOperation("Save a Client")
     @ApiResponse(code = 201, message = "OK")
-    public ResponseEntity<Client> save(@RequestBody Client client) {
+    public ResponseEntity<Client> saveClient(@RequestBody Client client) {
         return new ResponseEntity<>(clientService.save(client), HttpStatus.CREATED);
     }
 
     @GetMapping("/product")
     @ApiOperation("Get all products")
     @ApiResponse(code = 200, message = "OK")
-    public ResponseEntity<List<Product>> getAll() {
+    public ResponseEntity<List<Product>> getAllProducts() {
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
+
+    @GetMapping("/product/slug/{slug}")
+     @ApiOperation("Search a product with a slug")
+     @ApiResponses({ @ApiResponse(code = 200, message = "OK"),
+               @ApiResponse(code = 404, message = "Product not found") })
+     public ResponseEntity<Product> getProductBySlug(
+               @ApiParam(value = "The slug of the product", required = true, example = "product-slug-example") @PathVariable("slug") String slug) {
+          // si no existe un producto retorna un NOT_FOUND
+          return productService.getBySlug(slug).map(p -> new ResponseEntity<>(p, HttpStatus.OK))
+                    .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+     }
 }
