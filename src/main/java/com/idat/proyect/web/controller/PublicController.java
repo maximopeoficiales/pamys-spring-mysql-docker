@@ -33,6 +33,9 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/public")
 public class PublicController {
+    @Value("${myConfig.pathVouchers}")
+    String nameDirectoryVouchers;
+
     @Value("${myConfig.pathImagesClients}")
     String nameDirectoryPhotos;
 
@@ -40,6 +43,9 @@ public class PublicController {
     private ClientService clientService;
     @Autowired
     private ProductService productService;
+
+    // @Autowired
+    // private VoucherService voucherService;
 
     @PostMapping("/client")
     @ApiOperation("Save a Client")
@@ -65,10 +71,33 @@ public class PublicController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // obtener imagen
+    // obtener imagen del cliente
     @GetMapping("/clients/photos/{nombreFoto:.+}")
     public ResponseEntity<Resource> showPhotoClient(@PathVariable String nombreFoto) {
         Path rutaArchivo = Paths.get(this.nameDirectoryPhotos).resolve(nombreFoto).toAbsolutePath();
+        // log.info(rutaArchivo.toString());
+        Resource recurso = null;
+        try {
+            recurso = new UrlResource(rutaArchivo.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        if (!recurso.exists() && !recurso.isReadable()) {
+            throw new RuntimeException("Error no se puedo cargar la imagen " + nombreFoto);
+        }
+        HttpHeaders cabecera = new HttpHeaders();
+        // esta linea hace que descargue el archivo
+        // cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+        // recurso.getFilename() + "\"");
+        cabecera.add(HttpHeaders.CONTENT_TYPE, "image/png");
+        return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+    }
+
+    // obtener imagen del cliente
+    @GetMapping("/vouchers/photos/{nombreFoto:.+}")
+    public ResponseEntity<Resource> showPhotoVoucher(@PathVariable String nombreFoto) {
+        Path rutaArchivo = Paths.get(this.nameDirectoryVouchers).resolve(nombreFoto).toAbsolutePath();
         // log.info(rutaArchivo.toString());
         Resource recurso = null;
         try {
