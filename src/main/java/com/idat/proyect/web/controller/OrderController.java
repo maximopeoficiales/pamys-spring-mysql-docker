@@ -71,6 +71,7 @@ public class OrderController {
         currentOrder.setIdOrderStatus(Order.getIdOrderStatus());
         currentOrder.setIdPaymentStatus(Order.getIdPaymentStatus());
         currentOrder.setIdVoucher(Order.getIdVoucher());
+        currentOrder.setDateCreated(Order.getDateCreated());
         // currentOrder.setProducts(Order.getProducts());
         return new ResponseEntity<>(orderService.save(currentOrder), HttpStatus.CREATED);
     }
