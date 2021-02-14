@@ -1,18 +1,15 @@
 package com.idat.proyect.web.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
-import java.util.UUID;
 
 import com.idat.proyect.domain.service.VoucherService;
+import com.idat.proyect.environments.Enviroments;
 import com.idat.proyect.persistence.entity.Voucher;
+import com.idat.proyect.web.utilities.PhotoOperations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,8 +31,11 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/voucher")
 public class VoucherController {
-    @Value("${myConfig.pathVouchers}")
-    String nameDirectoryVouchers;
+    @Autowired
+    private PhotoOperations photoOperationsService;
+
+    @Autowired
+    private Enviroments env;
 
     @Autowired
     private VoucherService voucherService;
@@ -109,17 +109,14 @@ public class VoucherController {
         Voucher voucher = voucherService.getVoucher(idVoucher).map(voucherone -> voucherone).orElse(null);
         // si el archivo no esta vacio y si existe un voucher
         if (!file.isEmpty() && voucher != null) {
-            // genera identificador unico
-            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename().replace(" ", "");
-            Path filePath = Paths.get(this.nameDirectoryVouchers).resolve(fileName).toAbsolutePath();
+            String fileName = null;
             try {
-                // copio el archivo a la ruta especificada
-                Files.copy(file.getInputStream(), filePath);
+                fileName = this.photoOperationsService.copyPhoto(file, this.env.nameDirectoryVouchersPhotos);
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             // antes de guardar eliminamos la foto existente
-            this.removePhotoVoucher(idVoucher);
+            this.photoOperationsService.removePhoto(voucher.getImageUrl(), this.env.nameDirectoryVouchersPhotos);
             // guardo nueva foto
             voucher.setImageUrl(fileName);
             var voucherUpdated = voucherService.save(voucher);
@@ -127,19 +124,6 @@ public class VoucherController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-    }
-
-    // metodo para eliminar foto de client si existira otra
-    public void removePhotoVoucher(Integer id) {
-        Voucher voucher = voucherService.getVoucher(id).map(voucherone -> voucherone).orElse(null);
-        String nombreFotoAnterior = voucher.getImageUrl();
-        if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-            Path rutaFotoAnterior = Paths.get(this.nameDirectoryVouchers).resolve(nombreFotoAnterior).toAbsolutePath();
-            File archivoAnterior = rutaFotoAnterior.toFile();
-            if (archivoAnterior.exists() && archivoAnterior.canRead()) {
-                archivoAnterior.delete();
-            }
-        }
     }
 
 }

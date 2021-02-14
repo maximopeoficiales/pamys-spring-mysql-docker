@@ -1,9 +1,12 @@
 package com.idat.proyect.web.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.idat.proyect.domain.service.ProductImagesService;
+import com.idat.proyect.environments.Enviroments;
 import com.idat.proyect.persistence.entity.ProductImages;
+import com.idat.proyect.web.utilities.PhotoOperations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -25,6 +30,12 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/product_images")
 public class ProductImagesController {
+    @Autowired
+    private PhotoOperations photoOperationsService;
+
+    @Autowired
+    private Enviroments env;
+
     @Autowired
     private ProductImagesService productImagesService;
 
@@ -73,5 +84,36 @@ public class ProductImagesController {
             @ApiParam(value = "The id of the product image", required = true, example = "1") @PathVariable("id") int idProductImage) {
         return (productImagesService.delete(idProductImage)) ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/photos/upload")
+    public ResponseEntity<List<ProductImages>> uploadPhotoProduct(@RequestParam("imgFile") MultipartFile[] files,
+            @RequestParam("idProduct") Integer idProduct) {
+        // obtengo los imagenes relacionadas a los productos
+        List<ProductImages> products = productImagesService.getIdProduct(idProduct).map(e -> {
+            return e;
+        }).orElse(null);
+        // si el archivo no esta vacio y si existe un product
+        if (files.length != 0 && products != null) {
+            // genera identificador unico()
+            // guardo las fotos en el servidor y los nombres en un array
+            for (int i = 0; i < products.size(); i++) {
+                var product = products.get(i);
+                String fileName = null;
+                try {
+                    fileName = this.photoOperationsService.copyPhoto(files[i], this.env.nameDirectoryProductsPhotos);
+                } catch (IOException e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+                // antes de guardar eliminamos la foto existente
+                this.photoOperationsService.removePhoto(product.getUrl(), this.env.nameDirectoryProductsPhotos);
+                product.setUrl(fileName);
+                productImagesService.save(product);
+            }
+            var productUpload = productImagesService.getIdProduct(idProduct).map(e -> e).orElse(null);
+            return new ResponseEntity<List<ProductImages>>(productUpload, HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 }

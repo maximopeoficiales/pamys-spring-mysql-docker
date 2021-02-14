@@ -1,12 +1,15 @@
 package com.idat.proyect.web.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
 import com.idat.proyect.domain.service.ProductService;
+import com.idat.proyect.environments.Enviroments;
 import com.idat.proyect.persistence.entity.Product;
+import com.idat.proyect.web.utilities.PhotoOperations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,6 +34,12 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+     @Autowired
+     private PhotoOperations photoOperationsService;
+
+     @Autowired
+     private Enviroments env;
+
      @Autowired
      private ProductService productService;
 
@@ -109,5 +120,34 @@ public class ProductController {
                @ApiParam(value = "The id of the product", required = true, example = "1") @PathVariable("id") int idProduct) {
           return (productService.delete(idProduct)) ? new ResponseEntity<>(HttpStatus.OK)
                     : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+     }
+
+     // subir imagen
+     @PostMapping("/photos/upload")
+     public ResponseEntity<Product> uploadPhotoProduct(@RequestParam("imgFile") MultipartFile file,
+               @RequestParam("idProduct") Integer idProduct) {
+
+          Product product = productService.getProduct(idProduct).map(e -> {
+               return e;
+          }).orElse(null);
+          // si el archivo no esta vacio y si existe un product
+          if (!file.isEmpty() && product != null) {
+               // genera identificador unico
+               String fileName = null;
+               try {
+                    this.photoOperationsService.copyPhoto(file, this.env.nameDirectoryProductsThumbnailPhotos);
+               } catch (IOException e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+               }
+               // antes de guardar eliminamos la foto existente
+               this.photoOperationsService.removePhoto(product.getThumbnailUrl(),
+                         this.env.nameDirectoryProductsThumbnailPhotos);
+               // guardo nueva foto
+               product.setThumbnailUrl(fileName);
+               var productUpload = productService.save(product);
+               return new ResponseEntity<Product>(productUpload, HttpStatus.ACCEPTED);
+          }
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
      }
 }

@@ -1,18 +1,14 @@
 package com.idat.proyect.web.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 import com.idat.proyect.domain.service.ClientService;
+import com.idat.proyect.environments.Enviroments;
 import com.idat.proyect.persistence.entity.Client;
+import com.idat.proyect.web.utilities.PhotoOperations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,10 +31,12 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/client")
 public class ClientController {
+     @Autowired
+     private PhotoOperations photoOperationsService;
 
-     @Value("${myConfig.pathImagesClients}")
-     String nameDirectoryPhotos;
-     
+     @Autowired
+     private Enviroments env;
+
      @Autowired
      private ClientService clientService;
 
@@ -105,17 +103,15 @@ public class ClientController {
           // si el archivo no esta vacio y si existe un cliente
           if (!file.isEmpty() && cliente != null) {
                // genera identificador unico
-               String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename().replace(" ", "");
-               Path filePath = Paths.get(this.nameDirectoryPhotos).resolve(fileName).toAbsolutePath();
-               // log.info(filePath.toString());
+               String fileName = null;
                try {
-                    // copio el archivo a la ruta especificada
-                    Files.copy(file.getInputStream(), filePath);
+                    this.photoOperationsService.copyPhoto(file, this.env.nameDirectoryClientPhotos);
                } catch (IOException e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                }
                // antes de guardar eliminamos la foto existente
-               this.removePhotoClient(idClient);
+               this.photoOperationsService.removePhoto(cliente.getProfilePictureUrl(),
+                         this.env.nameDirectoryClientPhotos);
                // guardo nueva foto
                cliente.setProfilePictureUrl(fileName);
                var clienteUpdated = clientService.savePhoto(cliente);
@@ -125,17 +121,4 @@ public class ClientController {
 
      }
 
-     // metodo para eliminar foto de client si existira otra
-     public void removePhotoClient(Integer id) {
-          Client cliente = clientService.getClient(id).map(client -> client).orElse(null);
-          String nombreFotoAnterior = cliente.getProfilePictureUrl();
-
-          if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-               Path rutaFotoAnterior = Paths.get(this.nameDirectoryPhotos).resolve(nombreFotoAnterior).toAbsolutePath();
-               File archivoAnterior = rutaFotoAnterior.toFile();
-               if (archivoAnterior.exists() && archivoAnterior.canRead()) {
-                    archivoAnterior.delete();
-               }
-          }
-     }
 }

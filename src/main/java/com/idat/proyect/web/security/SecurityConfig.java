@@ -1,6 +1,7 @@
 package com.idat.proyect.web.security;
 
 import com.idat.proyect.domain.service.IdatUserDetailsService;
+import com.idat.proyect.environments.Enviroments;
 import com.idat.proyect.web.security.filter.JWTFilterRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
      // inyectamos nuestra configuracion
-
+     @Autowired
+     private Enviroments env;
      // datos de los usuarios
      @Autowired
      private IdatUserDetailsService idatUserDetailsService;
@@ -76,8 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           return new WebMvcConfigurer() {
                @Override
                public void addCorsMappings(CorsRegistry registry) {
-                    registry.addMapping("/**").allowedOrigins("*").allowedHeaders("*").exposedHeaders("Authorization")
-                              .allowedMethods("*");
+                    registry.addMapping("/**").allowedOrigins(env.pathOriginsCors).allowedHeaders("*")
+                              .exposedHeaders("Authorization").allowedMethods("*");
                }
           };
      }
