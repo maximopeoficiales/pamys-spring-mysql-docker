@@ -37,6 +37,7 @@ public class PhotoOperations implements IPhotoOperations {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename().replace(" ", "");
         Path filePath = Paths.get(pathAbsolute).resolve(fileName).toAbsolutePath();
         console.log(fileName);
+        console.log(filePath.toString());
         Files.copy(file.getInputStream(), filePath);
         return fileName;
     }

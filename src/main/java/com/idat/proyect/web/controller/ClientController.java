@@ -105,7 +105,7 @@ public class ClientController {
                // genera identificador unico
                String fileName = null;
                try {
-                    this.photoOperationsService.copyPhoto(file, this.env.nameDirectoryClientPhotos);
+                    fileName = this.photoOperationsService.copyPhoto(file, this.env.nameDirectoryClientPhotos);
                } catch (IOException e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                }

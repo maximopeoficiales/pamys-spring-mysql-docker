@@ -135,7 +135,8 @@ public class ProductController {
                // genera identificador unico
                String fileName = null;
                try {
-                    this.photoOperationsService.copyPhoto(file, this.env.nameDirectoryProductsThumbnailPhotos);
+                    fileName = this.photoOperationsService.copyPhoto(file,
+                              this.env.nameDirectoryProductsThumbnailPhotos);
                } catch (IOException e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                }

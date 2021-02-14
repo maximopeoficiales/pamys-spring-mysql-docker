@@ -97,19 +97,26 @@ public class ProductImagesController {
         if (files.length != 0 && products != null) {
             // genera identificador unico()
             // guardo las fotos en el servidor y los nombres en un array
+            // elimino en cascada todas las imgenes
             for (int i = 0; i < products.size(); i++) {
                 var product = products.get(i);
+                productImagesService.delete(product.getIdProductImages());
+                this.photoOperationsService.removePhoto(product.getUrl(), this.env.nameDirectoryProductsPhotos);
+            }
+            // guardo en cascada todas las imagenes
+            for (int j = 0; j < files.length; j++) {
                 String fileName = null;
                 try {
-                    fileName = this.photoOperationsService.copyPhoto(files[i], this.env.nameDirectoryProductsPhotos);
+                    fileName = this.photoOperationsService.copyPhoto(files[j], this.env.nameDirectoryProductsPhotos);
                 } catch (IOException e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
-                // antes de guardar eliminamos la foto existente
-                this.photoOperationsService.removePhoto(product.getUrl(), this.env.nameDirectoryProductsPhotos);
+                var product = new ProductImages();
+                product.setIdProduct(idProduct);
                 product.setUrl(fileName);
                 productImagesService.save(product);
             }
+
             var productUpload = productImagesService.getIdProduct(idProduct).map(e -> e).orElse(null);
             return new ResponseEntity<List<ProductImages>>(productUpload, HttpStatus.ACCEPTED);
         }

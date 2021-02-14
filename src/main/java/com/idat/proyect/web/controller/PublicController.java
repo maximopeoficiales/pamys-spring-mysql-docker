@@ -86,7 +86,7 @@ public class PublicController {
     public ResponseEntity<Resource> showPhotoClient(@PathVariable String nombreFoto) {
         Resource recurso = null;
         try {
-            this.photoOperationsService.chargingFile(nombreFoto, this.env.nameDirectoryClientPhotos);
+            recurso = this.photoOperationsService.chargingFile(nombreFoto, this.env.nameDirectoryClientPhotos);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
