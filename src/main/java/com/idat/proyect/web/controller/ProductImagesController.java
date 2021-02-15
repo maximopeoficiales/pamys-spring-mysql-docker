@@ -94,14 +94,16 @@ public class ProductImagesController {
             return e;
         }).orElse(null);
         // si el archivo no esta vacio y si existe un product
-        if (files.length != 0 && products != null) {
+        if (files.length != 0) {
             // genera identificador unico()
             // guardo las fotos en el servidor y los nombres en un array
-            // elimino en cascada todas las imgenes
-            for (int i = 0; i < products.size(); i++) {
-                var product = products.get(i);
-                productImagesService.delete(product.getIdProductImages());
-                this.photoOperationsService.removePhoto(product.getUrl(), this.env.nameDirectoryProductsPhotos);
+            if (products != null) {
+                // elimino en cascada todas las imgenes
+                for (int i = 0; i < products.size(); i++) {
+                    var product = products.get(i);
+                    productImagesService.delete(product.getIdProductImages());
+                    this.photoOperationsService.removePhoto(product.getUrl(), this.env.nameDirectoryProductsPhotos);
+                }
             }
             // guardo en cascada todas las imagenes
             for (int j = 0; j < files.length; j++) {
