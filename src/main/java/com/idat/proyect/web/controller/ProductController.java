@@ -101,15 +101,15 @@ public class ProductController {
           Product currentProduct = productService.getProduct(product.getIdProduct()).map(Product -> {
                return Product;
           }).orElse(null);
-          currentProduct.setCategory(product.getCategory());
           currentProduct.setDescription(product.getDescription());
           currentProduct.setSku(product.getSku());
-          currentProduct.setVendor(product.getVendor());
+          currentProduct.setIdVendor(product.getIdVendor());
+          currentProduct.setIdCategory(product.getIdCategory());
           currentProduct.setName(product.getName());
           currentProduct.setPrice(product.getPrice());
           currentProduct.setSalePrice(product.getSalePrice());
           currentProduct.setStock(product.getStock());
-          currentProduct.setThumbnailUrl(product.getThumbnailUrl());
+          // currentProduct.setThumbnailUrl(product.getThumbnailUrl());
           return new ResponseEntity<>(productService.save(currentProduct), HttpStatus.CREATED);
      }
 
