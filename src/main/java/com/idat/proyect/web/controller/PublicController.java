@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +59,32 @@ public class PublicController {
     @ApiResponse(code = 200, message = "OK")
     public ResponseEntity<List<Product>> getAllProducts() {
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/product")
+    @ApiOperation("Save product")
+    @ApiResponse(code = 200, message = "OK")
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.save(product), HttpStatus.OK);
+    }
+
+    @PutMapping("/product")
+    @ApiOperation("Save product")
+    @ApiResponse(code = 200, message = "OK")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+        Product currentProduct = productService.getProduct(product.getIdProduct()).map(Product -> {
+            return Product;
+        }).orElse(null);
+        currentProduct.setDescription(product.getDescription());
+        currentProduct.setSku(product.getSku());
+        currentProduct.setIdVendor(product.getIdVendor());
+        currentProduct.setIdCategory(product.getIdCategory());
+        currentProduct.setName(product.getName());
+        currentProduct.setPrice(product.getPrice());
+        currentProduct.setSalePrice(product.getSalePrice());
+        currentProduct.setStock(product.getStock());
+        // currentProduct.setThumbnailUrl(product.getThumbnailUrl());
+        return new ResponseEntity<>(productService.save(currentProduct), HttpStatus.CREATED);
     }
 
     @GetMapping("/product/search/{name}")
